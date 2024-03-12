@@ -8,6 +8,10 @@ type CartState = {
   toggleCart: () => void
   addProduct: (item: AddCartType) => void
   removeProduct: (item: AddCartType) => void
+  paymentIntent: string
+  onCheckout: string
+  setPaymentIntent: (val: string) => void
+  setCheckout: (val: string) => void
 }
 
 export const useCartStore = create<CartState>()(
@@ -36,10 +40,9 @@ export const useCartStore = create<CartState>()(
           }
         }),
 
-   
       removeProduct: (item) =>
         set((state) => {
-             //Check if the item exists and remove quantity - 1
+          //Check if the item exists and remove quantity - 1
           const existingItem = state.cart.find(
             (cartitem) => cartitem.id === item.id
           )
@@ -60,8 +63,9 @@ export const useCartStore = create<CartState>()(
             return { cart: filteredCart }
           }
         }),
+      setPaymentIntent: (val) => set((state) => ({ paymentIntent: val })),
+      setCheckout: (val) => set((state) => ({ onCheckout: val })),
     }),
-
     { name: 'cart-store' }
   )
 )
